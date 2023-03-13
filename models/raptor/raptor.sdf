@@ -59,6 +59,8 @@
       <gravity>1</gravity>
       <velocity_decay/>
     </link>
+
+    <!-- IMU -->
     <include>
       <uri>model://imu</uri>
       <pose>0 0.03 0 0 0 0</pose>
@@ -83,7 +85,8 @@
       </axis>
     </joint>
 
- <link name='rotor_0'>
+    <!-- Rotor 0 -->
+    <link name='rotor_0'>
       <pose>0.13 -0.22 0.023 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
@@ -132,6 +135,8 @@
       <gravity>1</gravity>
       <velocity_decay/>
     </link>
+
+     <!-- Rotor 0 joint -->
     <joint name='rotor_0_joint' type='revolute'>
       <child>rotor_0</child>
       <parent>base_link</parent>
@@ -148,6 +153,8 @@
         <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
+
+     <!-- Rotor 1 -->
     <link name='rotor_1'>
       <pose>-0.13 0.2 0.023 0 0 0</pose>
       <inertial>
@@ -197,6 +204,8 @@
       <gravity>1</gravity>
       <velocity_decay/>
     </link>
+
+     <!-- Rotor 1 joint -->
     <joint name='rotor_1_joint' type='revolute'>
       <child>rotor_1</child>
       <parent>base_link</parent>
@@ -213,6 +222,8 @@
         <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
+
+     <!-- Rotor 2 -->
     <link name='rotor_2'>
       <pose>0.13 0.22 0.023 0 0 0</pose>
       <inertial>
@@ -262,6 +273,8 @@
       <gravity>1</gravity>
       <velocity_decay/>
     </link>
+
+     <!-- Rotor 2 joint -->
     <joint name='rotor_2_joint' type='revolute'>
       <child>rotor_2</child>
       <parent>base_link</parent>
@@ -278,6 +291,8 @@
         <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
+
+     <!-- Rotor 3 -->
     <link name='rotor_3'>
       <pose>-0.13 -0.2 0.023 0 0 0</pose>
       <inertial>
@@ -327,6 +342,8 @@
       <gravity>1</gravity>
       <velocity_decay/>
     </link>
+
+     <!-- Rotor 3 joint -->
     <joint name='rotor_3_joint' type='revolute'>
       <child>rotor_3</child>
       <parent>base_link</parent>
@@ -344,65 +361,14 @@
       </axis>
     </joint>
 
-    <!-- TEST GRIPPER -->
-    <!-- <link name='leftGripperLink'>
-      <pose>0.0 0.0 1.0 0 0 0</pose>
-      <inertial>
-        <pose>0 0 0 0 0 0</pose>
-        <mass>0.005</mass>
-        <inertia>
-          <ixx>9.75e-07</ixx>
-          <ixy>0</ixy>
-          <ixz>0</ixz>
-          <iyy>0.000273104</iyy>
-          <iyz>0</iyz>
-          <izz>0.000274004</izz>
-        </inertia>
-      </inertial>
-
-      <visual name='leftGripperLink_visual'>
-        <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <mesh>
-            <scale>1 1 1</scale>
-            <uri>model://iris/meshes/iris_prop_ccw.dae</uri>
-          </mesh>
-        </geometry>
-        <material>
-          <script>
-            <name>Gazebo/Red</name>
-            <uri>file://media/materials/scripts/gazebo.material</uri>
-          </script>
-        </material>
-      </visual>
-      <gravity>1</gravity>
-      <velocity_decay/>
-    </link>
-    <joint name='leftGripperJoint' type='revolute'>
-      <child>leftGripperLink</child>
-      <parent>base_link</parent>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <lower>-1e+16</lower>
-          <upper>1e+16</upper>
-        </limit>
-        <use_parent_model_frame>1</use_parent_model_frame>
-      </axis>
-    </joint> -->
-
-
+     <!-- Rosbag -->
     <plugin name='rosbag' filename='libgazebo_multirotor_base_plugin.so'>
       <robotNamespace/>
       <linkName>base_link</linkName>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
     </plugin>
 
-    <!-- <plugin name='leftGripper_plugin' filename='libServoPlugin.so'>
-      <subTopic>leftGripper_deg</subTopic>
-      <linkName>leftGripperLink</linkName>
-      <jointName>leftGripperJoint</jointName>
-    </plugin> -->
+    <!-- Plugin Rotor 0 -->
     <plugin name='front_right_motor_model' filename='libgazebo_motor_model.so'>
       <robotNamespace/>
       <jointName>rotor_0_joint</jointName>
@@ -420,6 +386,8 @@
       <motorSpeedPubTopic>/motor_speed/0</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
     </plugin>
+
+    <!-- Plugin Rotor 1 -->
     <plugin name='back_left_motor_model' filename='libgazebo_motor_model.so'>
       <robotNamespace/>
       <jointName>rotor_1_joint</jointName>
@@ -437,6 +405,8 @@
       <motorSpeedPubTopic>/motor_speed/1</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
     </plugin>
+
+    <!-- Plugin Rotor 2 -->
     <plugin name='front_left_motor_model' filename='libgazebo_motor_model.so'>
       <robotNamespace/>
       <jointName>rotor_2_joint</jointName>
@@ -454,6 +424,8 @@
       <motorSpeedPubTopic>/motor_speed/2</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
     </plugin>
+
+    <!-- Plugin Rotor 3 -->
     <plugin name='back_right_motor_model' filename='libgazebo_motor_model.so'>
       <robotNamespace/>
       <jointName>rotor_3_joint</jointName>
@@ -471,6 +443,8 @@
       <motorSpeedPubTopic>/motor_speed/3</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
     </plugin>
+
+    <!-- GPS -->
     <include>
       <uri>model://gps</uri>
       <pose> -0.03 0 0 0 0</pose>
@@ -480,6 +454,8 @@
       <child>gps0::link</child>
       <parent>base_link</parent>
     </joint>
+
+    <!-- Magnetometer -->
     <include>
       <uri>model://magnetometer</uri>
       <pose>0 0 0 0 0 0</pose>
@@ -489,15 +465,21 @@
       <child>mag::link</child>
       <parent>base_link</parent>
     </joint>
+
+    <!-- Groundtruth -->
     <plugin name='groundtruth_plugin' filename='libgazebo_groundtruth_plugin.so'>
       <robotNamespace/>
     </plugin>
+
+    <!-- Barometer -->
     <plugin name='barometer_plugin' filename='libgazebo_barometer_plugin.so'>
       <robotNamespace/>
       <pubRate>50</pubRate>
       <baroTopic>/baro</baroTopic>
       <baroDriftPaPerSec>0</baroDriftPaPerSec>
     </plugin>
+
+    <!-- Mavlink -->
     <plugin name='mavlink_interface' filename='libgazebo_mavlink_interface.so'>
       <robotNamespace/>
       <imuSubTopic>/imu</imuSubTopic>
@@ -617,9 +599,8 @@
     </plugin>
     <static>0</static>
 
-    <!-- GRIPPER -->
+    <!-- Gripper -->
     <link name='gripper_base_link'>
-
       <pose relative_to='base_link'> 0.0 0.0 -0.05 0.0 1.5707963 0.0</pose><!--1.5707963 1.5707963 -0.02 -->
       <inertial>
         <pose>0 0 0 0 0 0</pose>
@@ -685,6 +666,7 @@
       </axis>
     </joint>
 
+    <!-- Gripper left link -->
     <link name='gripper_left_link'>
       <pose relative_to='gripper_base_link'> 0.05666 0.0 -0.03465 0.0 0.0 0.0</pose>
       <inertial>
@@ -767,6 +749,7 @@
       <turningDirection>0</turningDirection> <!-- 0: clockwise, 1: counterclockwise -->
     </plugin>
 
+    <!-- Gripper right link -->
     <link name='gripper_right_link'>
       <!--x: -0.01248 -0.04418 = -0.05666  -->
       <!--z: 0.02006 + 0.01459 = -0.03465 -->
@@ -853,394 +836,306 @@
 
 
        <!-- REALSENSE Facing downwards -->
- <model name="realsense_camera_down">
-     <plugin name="realsense_down_plugin" filename="libRealSensePlugin.so">
-      <pubTopic>realsense_down</pubTopic>
-    </plugin>
-    <pose relative_to='base_link'>0.0 0.0 -0.08 0.0 1.57079632679 0.0</pose> <!---0.1-->
+    <model name="realsense_camera_down">
+      <plugin name="realsense_down_plugin" filename="libRealSensePlugin.so">
+        <pubTopic>realsense_down</pubTopic>
+      </plugin>
+      <pose relative_to='base_link'>0.0 0.0 -0.08 0.0 1.57079632679 0.0</pose> <!---0.1-->
 
-    <joint name='realsense_joint' type='fixed'>
-      <child>realsense_down_link</child>
-      <parent>base_link</parent>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <lower>-1e+16</lower>
-          <upper>1e+16</upper>
-        </limit>
-        <use_parent_model_frame>1</use_parent_model_frame>
-      </axis>
-    </joint>
+      <joint name='realsense_joint' type='fixed'>
+        <child>realsense_down_link</child>
+        <parent>base_link</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
 
-    <link name="realsense_down_link">
-       <inertial>
+      <link name="realsense_down_link">
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>0.00000001</mass>
+          <inertia>
+            <ixx>0.000001</ixx>
+            <ixy>0.0</ixy>
+            <iyy>0.000001</iyy>
+            <ixz>0.0</ixz>
+            <iyz>0.0</iyz>
+            <izz>0.000001</izz>
+          </inertia>
+        </inertial>
+        <self_collide>false</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://realsense_camera/meshes/realsense.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
         <pose>0 0 0 0 0 0</pose>
-        <mass>0.00000001</mass>
-        <inertia>
-          <ixx>0.000001</ixx>
-          <ixy>0.0</ixy>
-          <iyy>0.000001</iyy>
-          <ixz>0.0</ixz>
-          <iyz>0.0</iyz>
-          <izz>0.000001</izz>
-        </inertia>
-      </inertial>
-      <self_collide>false</self_collide>
-      <kinematic>0</kinematic>
-      <gravity>1</gravity>
-      <visual name="visual">
-        <geometry>
-          <mesh>
-            <uri>model://realsense_camera/meshes/realsense.dae</uri>
-          </mesh>
-        </geometry>
-      </visual>
-      <collision name='collision'>
-       <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <box>
-            <size>0.0001 0.0001 0.0001</size>
-          </box>
-        </geometry>
-        <surface>
-          <friction>
-            <ode>
-            </ode>
-          </friction>
-        </surface>
-      <!-- <laser_retro>0</laser_retro>
-        <max_contacts>10</max_contacts>
-        <pose>0 0 0 0 -0 0</pose>
-        <geometry>
-          <box>
-            <size>0.0078 0.130 0.0192</size>
-          </box>
-        </geometry>
-        <surface>
-          <friction>
-            <ode>
-              <mu>1</mu>
-              <mu2>1</mu2>
-              <fdir1>0 0 0</fdir1>
-              <slip1>0</slip1>
-              <slip2>0</slip2>
-            </ode>
-          </friction>
-          <bounce>
-            <restitution_coefficient>0</restitution_coefficient>
-            <threshold>1e+06</threshold>
-          </bounce>
-          <contact>
-            <collide_without_contact>0</collide_without_contact>
-            <collide_without_contact_bitmask>1</collide_without_contact_bitmask>
-            <collide_bitmask>1</collide_bitmask>
-            <ode>
-              <soft_cfm>0</soft_cfm>
-              <soft_erp>0.2</soft_erp>
-              <kp>1e+13</kp>
-              <kd>1</kd>
-              <max_vel>0.01</max_vel>
-              <min_depth>0</min_depth>
-            </ode>
-            <bullet>
-              <split_impulse>1</split_impulse>
-              <split_impulse_penetration_threshold>-0.01</split_impulse_penetration_threshold>
-              <soft_cfm>0</soft_cfm>
-              <soft_erp>0.2</soft_erp>
-              <kp>1e+13</kp>
-              <kd>1</kd>
-            </bullet>
-          </contact>
-        </surface> -->
-      </collision>
-      <sensor name="realsense_camera_down_color" type="camera">
-        <pose>0 -0.046 0.004 0 0 0</pose>x
-        <camera name="__default__">
-          <horizontal_fov>1.047</horizontal_fov>
-          <image>
-            <width>640</width>
-            <height>480</height>
-            <format>RGB_INT8</format>
-          </image>
-          <clip>
-            <near>0.1</near>
-            <far>100</far>
-          </clip>
-          <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.007</stddev>
-          </noise>
-        </camera>
-        <always_on>1</always_on>
-        <update_rate>60</update_rate>
-        <visualize>1</visualize>
-      </sensor>
-      <sensor name="realsense_camera_down_ired1" type="camera">
-        <pose>0 -0.06 0.004 0 0 0</pose>
-        <camera name="__default__">
-          <horizontal_fov>1.047</horizontal_fov>
-          <image>
-            <width>640</width>
-            <height>480</height>
-            <format>L_INT8</format>
-          </image>
-          <clip>
-            <near>0.1</near>
-            <far>100</far>
-          </clip>
-          <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.007</stddev>
-          </noise>
-        </camera>
-        <always_on>1</always_on>
-        <update_rate>60</update_rate>
-        <visualize>0</visualize>
-      </sensor>
-      <sensor name="realsense_camera_down_ired2" type="camera">
-        <pose>0 0.01 0.004 0 0 0</pose>
-        <camera name="__default__">
-          <horizontal_fov>1.047</horizontal_fov>
-          <image>
-            <width>640</width>
-            <height>480</height>
-            <format>L_INT8</format>
-          </image>
-          <clip>
-            <near>0.1</near>
-            <far>100</far>
-          </clip>
-          <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.007</stddev>
-          </noise>
-        </camera>
-        <always_on>1</always_on>
-        <update_rate>60</update_rate>
-        <visualize>0</visualize>
-      </sensor>
-      <sensor name="realsense_camera_down_depth" type="depth">
-        <pose>0 -0.03 0.004 0 0 0</pose>
-        <camera name="__default__">
-          <horizontal_fov>1.047</horizontal_fov>
-          <image>
-            <width>640</width>
-            <height>480</height>
-          </image>
-          <clip>
-            <near>0.1</near>
-            <far>100</far>
-          </clip>
-          <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.007</stddev>
-          </noise>
-        </camera>
-        <always_on>1</always_on>
-        <update_rate>60</update_rate>
-        <visualize>0</visualize>
-      </sensor>
-    </link>
-  </model>
+          <geometry>
+            <box>
+              <size>0.0001 0.0001 0.0001</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <sensor name="realsense_camera_down_color" type="camera">
+          <pose>0 -0.046 0.004 0 0 0</pose>x
+          <camera name="__default__">
+            <horizontal_fov>1.047</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>RGB_INT8</format>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>100</far>
+            </clip>
+            <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.007</stddev>
+            </noise>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>60</update_rate>
+          <visualize>1</visualize>
+        </sensor>
+        <sensor name="realsense_camera_down_ired1" type="camera">
+          <pose>0 -0.06 0.004 0 0 0</pose>
+          <camera name="__default__">
+            <horizontal_fov>1.047</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>L_INT8</format>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>100</far>
+            </clip>
+            <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.007</stddev>
+            </noise>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>60</update_rate>
+          <visualize>0</visualize>
+        </sensor>
+        <sensor name="realsense_camera_down_ired2" type="camera">
+          <pose>0 0.01 0.004 0 0 0</pose>
+          <camera name="__default__">
+            <horizontal_fov>1.047</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>L_INT8</format>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>100</far>
+            </clip>
+            <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.007</stddev>
+            </noise>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>60</update_rate>
+          <visualize>0</visualize>
+        </sensor>
+        <sensor name="realsense_camera_down_depth" type="depth">
+          <pose>0 -0.03 0.004 0 0 0</pose>
+          <camera name="__default__">
+            <horizontal_fov>1.047</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>100</far>
+            </clip>
+            <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.007</stddev>
+            </noise>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>60</update_rate>
+          <visualize>0</visualize>
+        </sensor>
+      </link>
+    </model>
 
 
-  <!-- REALSENSE Facing forwards -->
- <model name="realsense_camera_front">
-     <plugin name="realsense_front_plugin" filename="libRealSensePlugin.so">
-      <pubTopic>realsense_front</pubTopic>
-    </plugin>
-    <pose relative_to='base_link'>0.07 0.0 0 -0.01  0.78539816339 0.0</pose> <!-- .08 0.0 -0.05-->
+    <!-- REALSENSE Facing forwards -->
+    <model name="realsense_camera_front">
+      <plugin name="realsense_front_plugin" filename="libRealSensePlugin.so">
+        <pubTopic>realsense_front</pubTopic>
+      </plugin>
+      <pose relative_to='base_link'>0.07 0.0 0 -0.01  0.78539816339 0.0</pose> <!-- .08 0.0 -0.05-->
 
-    <joint name='realsense_joint' type='fixed'>
-      <child>realsense_front_link</child>
-      <parent>base_link</parent>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <lower>-1e+16</lower>
-          <upper>1e+16</upper>
-        </limit>
-        <use_parent_model_frame>1</use_parent_model_frame>
-      </axis>
-    </joint>
+      <joint name='realsense_joint' type='fixed'>
+        <child>realsense_front_link</child>
+        <parent>base_link</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
 
-    <link name="realsense_front_link">
-      <inertial>
-        <pose>0 0 0 0 0 0</pose>
-        <mass>0.00000001</mass>
-        <inertia>
-          <ixx>0.000001</ixx>
-          <ixy>0.0</ixy>
-          <iyy>0.000001</iyy>
-          <ixz>0.0</ixz>
-          <iyz>0.0</iyz>
-          <izz>0.000001</izz>
-        </inertia>
-      </inertial>
-      <self_collide>false</self_collide>
-      <kinematic>0</kinematic>
-      <gravity>1</gravity>
-      <visual name="visual">
-        <geometry>
-          <mesh>
-            <uri>model://realsense_camera/meshes/realsense.dae</uri>
-          </mesh>
-        </geometry>
-      </visual>
-      <collision name='collision'>
-        <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <box>
-            <size>0.0001 0.0001 0.0001</size>
-          </box>
-        </geometry>
-        <surface>
-          <friction>
-            <ode>
-            </ode>
-          </friction>
-        </surface>
-        <!-- <laser_retro>0</laser_retro>
-        <max_contacts>10</max_contacts>
-        <pose>0 0 0 0 -0 0</pose>
-        <geometry>
-          <box>
-            <size>0.0078 0.130 0.0192</size>
-          </box>
-        </geometry>
-        <surface>
-          <friction>
-            <ode>
-              <mu>1</mu>
-              <mu2>1</mu2>
-              <fdir1>0 0 0</fdir1>
-              <slip1>0</slip1>
-              <slip2>0</slip2>
-            </ode>
-          </friction>
-          <bounce>
-            <restitution_coefficient>0</restitution_coefficient>
-            <threshold>1e+06</threshold>
-          </bounce>
-          <contact>
-            <collide_without_contact>0</collide_without_contact>
-            <collide_without_contact_bitmask>1</collide_without_contact_bitmask>
-            <collide_bitmask>1</collide_bitmask>
-            <ode>
-              <soft_cfm>0</soft_cfm>
-              <soft_erp>0.2</soft_erp>
-              <kp>1e+13</kp>
-              <kd>1</kd>
-              <max_vel>0.01</max_vel>
-              <min_depth>0</min_depth>
-            </ode>
-            <bullet>
-              <split_impulse>1</split_impulse>
-              <split_impulse_penetration_threshold>-0.01</split_impulse_penetration_threshold>
-              <soft_cfm>0</soft_cfm>
-              <soft_erp>0.2</soft_erp>
-              <kp>1e+13</kp>
-              <kd>1</kd>
-            </bullet>
-          </contact>
-        </surface> -->
-      </collision>
-      <sensor name="realsense_camera_front_color" type="camera">
-        <pose>0 -0.046 0.004 0 0 0</pose>x
-        <camera name="__default__">
-          <horizontal_fov>1.047</horizontal_fov>
-          <image>
-            <width>640</width>
-            <height>480</height>
-            <format>RGB_INT8</format>
-          </image>
-          <clip>
-            <near>0.1</near>
-            <far>100</far>
-          </clip>
-          <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.007</stddev>
-          </noise>
-        </camera>
-        <always_on>1</always_on>
-        <update_rate>60</update_rate>
-        <visualize>1</visualize>
-      </sensor>
-      <sensor name="realsense_camera_front_ired1" type="camera">
-        <pose>0 -0.06 0.004 0 0 0</pose>
-        <camera name="__default__">
-          <horizontal_fov>1.047</horizontal_fov>
-          <image>
-            <width>640</width>
-            <height>480</height>
-            <format>L_INT8</format>
-          </image>
-          <clip>
-            <near>0.1</near>
-            <far>100</far>
-          </clip>
-          <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.007</stddev>
-          </noise>
-        </camera>
-        <always_on>1</always_on>
-        <update_rate>60</update_rate>
-        <visualize>0</visualize>
-      </sensor>
-      <sensor name="realsense_camera_front_ired2" type="camera">
-        <pose>0 0.01 0.004 0 0 0</pose>
-        <camera name="__default__">
-          <horizontal_fov>1.047</horizontal_fov>
-          <image>
-            <width>640</width>
-            <height>480</height>
-            <format>L_INT8</format>
-          </image>
-          <clip>
-            <near>0.1</near>
-            <far>100</far>
-          </clip>
-          <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.007</stddev>
-          </noise>
-        </camera>
-        <always_on>1</always_on>
-        <update_rate>60</update_rate>
-        <visualize>0</visualize>
-      </sensor>
-      <sensor name="realsense_camera_front_depth" type="depth">
-        <pose>0 -0.03 0.004 0 0 0</pose>
-        <camera name="__default__">
-          <horizontal_fov>1.047</horizontal_fov>
-          <image>
-            <width>640</width>
-            <height>480</height>
-          </image>
-          <clip>
-            <near>0.1</near>
-            <far>100</far>
-          </clip>
-          <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.007</stddev>
-          </noise>
-        </camera>
-        <always_on>1</always_on>
-        <update_rate>60</update_rate>
-        <visualize>0</visualize>
-      </sensor>
-    </link>
-  </model>
+      <link name="realsense_front_link">
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>0.00000001</mass>
+          <inertia>
+            <ixx>0.000001</ixx>
+            <ixy>0.0</ixy>
+            <iyy>0.000001</iyy>
+            <ixz>0.0</ixz>
+            <iyz>0.0</iyz>
+            <izz>0.000001</izz>
+          </inertia>
+        </inertial>
+        <self_collide>false</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://realsense_camera/meshes/realsense.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.0001 0.0001 0.0001</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <sensor name="realsense_camera_front_color" type="camera">
+          <pose>0 -0.046 0.004 0 0 0</pose>x
+          <camera name="__default__">
+            <horizontal_fov>1.047</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>RGB_INT8</format>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>100</far>
+            </clip>
+            <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.007</stddev>
+            </noise>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>60</update_rate>
+          <visualize>1</visualize>
+        </sensor>
+        <sensor name="realsense_camera_front_ired1" type="camera">
+          <pose>0 -0.06 0.004 0 0 0</pose>
+          <camera name="__default__">
+            <horizontal_fov>1.047</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>L_INT8</format>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>100</far>
+            </clip>
+            <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.007</stddev>
+            </noise>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>60</update_rate>
+          <visualize>0</visualize>
+        </sensor>
+        <sensor name="realsense_camera_front_ired2" type="camera">
+          <pose>0 0.01 0.004 0 0 0</pose>
+          <camera name="__default__">
+            <horizontal_fov>1.047</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>L_INT8</format>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>100</far>
+            </clip>
+            <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.007</stddev>
+            </noise>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>60</update_rate>
+          <visualize>0</visualize>
+        </sensor>
+        <sensor name="realsense_camera_front_depth" type="depth">
+          <pose>0 -0.03 0.004 0 0 0</pose>
+          <camera name="__default__">
+            <horizontal_fov>1.047</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>100</far>
+            </clip>
+            <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.007</stddev>
+            </noise>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>60</update_rate>
+          <visualize>0</visualize>
+        </sensor>
+      </link>
+    </model>
   </model>
 </sdf>

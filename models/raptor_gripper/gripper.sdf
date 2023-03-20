@@ -1,0 +1,206 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name='gripper'>
+    <!-- Base link -->
+    <link name='gripper_base_link'>
+      <pose>0 0 0 0 1.5707963 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.00000001</mass>
+        <inertia>
+          <ixx>0.000001</ixx>
+          <ixy>0.0</ixy>
+          <iyy>0.000001</iyy>
+          <ixz>0.0</ixz>
+          <iyz>0.0</iyz>
+          <izz>0.000001</izz>
+        </inertia>
+      </inertial>
+      <self_collide> false</self_collide>
+      <collision name='gripper_base_link_inertia_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.02617 0.02689 0.04064</size>
+          </box>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>0</max_vel>
+            </ode>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='gripper_base_link_inertia_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>0.001 0.001 0.001</scale>
+            <uri>model://raptor/meshes/gripper_base.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/White</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+      <gravity>1</gravity>
+      <velocity_decay/>
+    </link>
+
+    <!-- Left link -->
+    <link name='gripper_left_link'>
+      <pose relative_to='gripper_base_link'> 0.05666 0.0 -0.03465 0.0 0.0 0.0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.00000001</mass>
+        <inertia>
+          <ixx>0.000001</ixx>
+          <ixy>0.0</ixy>
+          <iyy>0.000001</iyy>
+          <ixz>0.0</ixz>
+          <iyz>0.0</iyz>
+          <izz>0.000001</izz>
+        </inertia>
+      </inertial>
+      <self_collide>true</self_collide>
+      <collision name='gripper_left_link_inertia_collision'>
+        <pose>0.03417 0 0.02 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 0.08 0.03</size>
+          </box>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>100000</max_vel>
+            </ode>
+          </contact>
+           <friction>
+            <ode>
+              <mu>10000000</mu>
+              <mu2>10000000</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='gripper_left_link_inertia_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>0.001 0.001 0.001</scale>
+            <uri>model://raptor/meshes/gripper_1.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Red</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+      <gravity>1</gravity>
+      <velocity_decay/>
+    </link>
+
+    <!-- Left joint -->
+    <joint name='gripper_left_joint' type='revolute'>
+      <child>gripper_left_link</child>
+      <parent>gripper_base_link</parent>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <use_parent_model_frame>0</use_parent_model_frame>
+      </axis>
+      <pose relative_to='gripper_base_link'> 0.01248 0.0 -0.02006 0.0 0.0 0.0</pose>
+    </joint>
+
+    <!-- Right link -->
+    <link name='gripper_right_link'>
+      <pose relative_to='gripper_base_link'> 0.05666 0.0 0.03465 0.0 0.0 0.0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.00000001</mass>
+        <inertia>
+          <ixx>0.000001</ixx>
+          <ixy>0.0</ixy>
+          <iyy>0.000001</iyy>
+          <ixz>0.0</ixz>
+          <iyz>0.0</iyz>
+          <izz>0.000001</izz>
+        </inertia>
+      </inertial>
+      <self_collide>true</self_collide>
+      <collision name='gripper_right_link_inertia_collision'>
+        <pose>0.03417 0 -0.02 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 0.08 0.03</size>
+          </box>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>100000</max_vel>
+            </ode>
+          </contact>
+          <friction>
+            <ode>
+              <mu>10000000</mu>
+              <mu2>10000000</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='gripper_right_link_inertia_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <pose>0.03417 0 -0.02 0 0 0</pose>
+        <geometry>
+          <!-- <box>
+            <size>0.1 0.08 0.03</size>
+          </box> -->
+          <mesh>
+            <scale>0.001 0.001 0.001</scale>
+            <uri>model://raptor/meshes/gripper_2.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Red</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+      <gravity>1</gravity>
+      <velocity_decay/>
+    </link>
+
+    <!-- Right joint -->
+    <joint name='gripper_right_joint' type='revolute'>
+      <child>gripper_right_link</child>
+      <parent>gripper_base_link</parent>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <use_parent_model_frame>0</use_parent_model_frame>
+      </axis>
+      <pose relative_to='gripper_base_link'> 0.01248 0.0 0.02006 0.0 0.0 0.0</pose>
+    </joint>
+  </model>
+</sdf>

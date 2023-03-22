@@ -41,7 +41,7 @@
         <geometry>
           <mesh>
             <scale>0.001 0.001 0.001</scale>
-            <uri>model://raptor/meshes/gripper_base.stl</uri>
+            <uri>model://raptor_gripper/meshes/gripper_base.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -98,7 +98,7 @@
         <geometry>
           <mesh>
             <scale>0.001 0.001 0.001</scale>
-            <uri>model://raptor/meshes/gripper_1.stl</uri>
+            <uri>model://raptor_gripper/meshes/gripper_1.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -174,7 +174,7 @@
           </box> -->
           <mesh>
             <scale>0.001 0.001 0.001</scale>
-            <uri>model://raptor/meshes/gripper_2.stl</uri>
+            <uri>model://raptor_gripper/meshes/gripper_2.stl</uri>
           </mesh>
         </geometry>
         <material>

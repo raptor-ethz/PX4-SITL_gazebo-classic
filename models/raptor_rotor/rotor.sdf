@@ -38,7 +38,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://iris/meshes/iris_prop_ccw.dae</uri>
+            <uri>model://raptor_rotor/meshes/iris_prop_ccw.dae</uri>
           </mesh>
         </geometry>
         <material>

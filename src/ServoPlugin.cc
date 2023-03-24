@@ -21,16 +21,16 @@ ServoPlugin::ServoPlugin() : dataPtr(new ServoPluginPrivate) {}
 /////////////////////////////////////////////////
 ServoPlugin::~ServoPlugin() { delete joint_controller_; }
 
-void ServoPlugin::set_angle(const std_msgs::msg::Float64 &msg) {
+void ServoPlugin::set_angle(const std_msgs::msg::Float64::SharedPtr msg) {
   if (td_ == false) {
-    angle_ = msg.data * M_PI / 180.0;
+    angle_ = msg->data * M_PI / 180.0;
   } else {
-    angle_ = -msg.data * M_PI / 180.0;
+    angle_ = -msg->data * M_PI / 180.0;
   }
 }
 
 void ServoPlugin::set_servo(
-    std::shared_ptr<raptor_interface::srv::SetServo::Request> request,
+    const std::shared_ptr<raptor_interface::srv::SetServo::Request> request,
     std::shared_ptr<raptor_interface::srv::SetServo::Response> response) {
   if (td_ == false) {
     angle_ = request->angle * M_PI / 180.0;
@@ -144,8 +144,7 @@ void ServoPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
   //     10);
 
   subscription_ = this->ros_node_->create_subscription<std_msgs::msg::Float64>(
-      subTopic_, 10,
-      std::bind(&ServoPlugin::set_angle, this, std::placeholders::_1));
+      subTopic_, 10, std::bind(&ServoPlugin::set_angle, this, std::placeholders::_1));
 
   service_ = this->ros_node_->create_service<raptor_interface::srv::SetServo>(
       subTopic_, std::bind(&ServoPlugin::set_servo, this, std::placeholders::_1,

@@ -1,0 +1,225 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model xmlns:xacro="http://www.ros.org/wiki/xacro" name="raptor">
+      
+  <!-- Base Link -->
+  <include>
+      <uri>model://raptor_frame</uri>
+      <pose>0 0 0 0 0 1.57079632679</pose>
+      <name>raptor_frame</name>
+    </include>
+
+    <!-- IMU -->
+    <include>
+      <uri>model://imu</uri>
+      <pose>0 0.03 0 0 0 0</pose>
+      <name>imu</name>
+    </include>
+    <joint name='imu_joint' type='revolute'>
+      <child>imu::link</child>
+      <parent>raptor_frame::link</parent>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+        <lower>0</lower>
+        <upper>0</upper>
+          <effort>0</effort>
+          <velocity>0</velocity>
+          </limit>
+          <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+    </joint>
+
+    <!-- Rotors -->
+    <xacro:macro name="rotor" params="number reflect1 reflect2 motor_name turningDirection">
+      <include>
+        <uri>model://raptor_rotor</uri>
+        <pose>${0.13 * reflect1} ${0.2 * reflect2} 0.023 0 0 0</pose>
+        <name>rotor_${number}</name>
+      </include>
+
+      <!-- Rotor Joints -->
+      <joint name='rotor_${number}_joint' type='revolute'>
+        <child>rotor_${number}::link</child>
+        <parent>raptor_frame::link</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+
+      <!-- Rotor Plugin -->
+      <plugin name="${motor_name}" filename='libgazebo_motor_model.so'>
+        <robotNamespace/>
+        <jointName>rotor_${number}_joint</jointName>
+        <linkName>rotor_${number}::link</linkName>
+        <turningDirection>${turningDirection}</turningDirection>
+        <timeConstantUp>0.0125</timeConstantUp>
+        <timeConstantDown>0.025</timeConstantDown>
+        <maxRotVelocity>1100</maxRotVelocity>
+        <motorConstant>5.84e-06</motorConstant>
+        <momentConstant>0.06</momentConstant>
+        <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
+        <motorNumber>${number}</motorNumber>
+        <rotorDragCoefficient>0.000175</rotorDragCoefficient>
+        <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+        <motorSpeedPubTopic>/motor_speed/1</motorSpeedPubTopic>
+        <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      </plugin>
+    </xacro:macro>
+
+    <xacro:rotor number="0" reflect1="1" reflect2="-1" motor_name="front_right_motor_model" turningDirection="ccw" />
+    <xacro:rotor number="1" reflect1="-1" reflect2="1" motor_name="back_left_motor_model" turningDirection="ccw"/>
+    <xacro:rotor number="2" reflect1="1" reflect2="1" motor_name="front_left_motor_model" turningDirection="cw"/>
+    <xacro:rotor number="3" reflect1="-1" reflect2="-1" motor_name="back_right_motor_model" turningDirection="cw"/>
+
+    <!-- GPS -->
+    <include>
+      <uri>model://gps</uri>
+      <pose> -0.03 0 0 0 0</pose>
+      <name>gps0</name>
+    </include>
+    <joint name='gps0_joint' type='fixed'>
+      <child>gps0::link</child>
+      <parent>raptor_frame::link</parent>
+    </joint>
+
+    <!-- Magnetometer -->
+    <include>
+      <uri>model://magnetometer</uri>
+      <pose>0 0 0 0 0 0</pose>
+      <name>mag</name>
+    </include>
+    <joint name='mag_joint' type='fixed'>
+      <child>mag::link</child>
+      <parent>raptor_frame::link</parent>
+    </joint>
+
+    <!-- Groundtruth -->
+    <plugin name='groundtruth_plugin' filename='libgazebo_groundtruth_plugin.so'>
+      <robotNamespace/>
+    </plugin>
+
+    <!-- Barometer -->
+    <plugin name='barometer_plugin' filename='libgazebo_barometer_plugin.so'>
+      <robotNamespace/>
+      <pubRate>50</pubRate>
+      <baroTopic>/baro</baroTopic>
+      <baroDriftPaPerSec>0</baroDriftPaPerSec>
+    </plugin>
+
+    <!-- Mavlink -->
+    <plugin name='mavlink_interface' filename='libgazebo_mavlink_interface.so'>
+      <robotNamespace/>
+      <imuSubTopic>/imu</imuSubTopic>
+      <magSubTopic>/mag</magSubTopic>
+      <baroSubTopic>/baro</baroSubTopic>
+      <mavlink_addr>INADDR_ANY</mavlink_addr>
+      <mavlink_tcp_port>4560</mavlink_tcp_port>
+      <mavlink_udp_port>14560</mavlink_udp_port>
+      <serialEnabled>0</serialEnabled>
+      <serialDevice>/dev/ttyACM0</serialDevice>
+      <baudRate>921600</baudRate>
+      <qgc_addr>INADDR_ANY</qgc_addr>
+      <qgc_udp_port>14550</qgc_udp_port>
+      <sdk_addr>INADDR_ANY</sdk_addr>
+      <sdk_udp_port>14540</sdk_udp_port>
+      <hil_mode>0</hil_mode>
+      <hil_state_level>0</hil_state_level>
+      <send_vision_estimation>0</send_vision_estimation>
+      <send_odometry>1</send_odometry>
+      <enable_lockstep>1</enable_lockstep>
+      <use_tcp>1</use_tcp>
+      <motorSpeedCommandPubTopic>/gazebo/command/motor_speed</motorSpeedCommandPubTopic>
+      <control_channels>
+        <xacro:macro name="channel" params="index">
+          <channel name='rotor${index}'>
+            <input_index>${index-1}</input_index>
+            <input_offset>0</input_offset>
+            <input_scaling>1000</input_scaling>
+            <zero_position_disarmed>0</zero_position_disarmed>
+            <zero_position_armed>100</zero_position_armed>
+            <joint_control_type>velocity</joint_control_type>
+          </channel>
+        </xacro:macro>
+
+        <xacro:channel index="1"/>
+        <xacro:channel index="2"/>
+        <xacro:channel index="3"/>
+        <xacro:channel index="4"/>
+      </control_channels>
+    </plugin>
+    <static>0</static>
+
+    <!-- Gripper -->
+    <include>
+      <uri>model://raptor_gripper</uri>
+      <pose>0 0 -0.05 0 0 0</pose>
+      <name>gripper</name>
+    </include>
+
+    <joint name='gripper_base_joint' type='fixed'>
+      <child>gripper::gripper_base_link</child>
+      <parent>raptor_frame::link</parent>
+    </joint>
+
+    <plugin name='gripper_left_plugin' filename='libServoPlugin.so'>
+      <subTopic>leftGripper_deg</subTopic>
+      <linkName>gripper::gripper_left_link</linkName>
+      <jointName>gripper::gripper_left_joint</jointName>
+      <initialAngle>90.0</initialAngle>
+      <turningDirection>0</turningDirection> 
+    </plugin>
+
+    <plugin name='gripper_right_plugin' filename='libServoPlugin.so'>
+      <subTopic>rightGripper_deg</subTopic>
+      <linkName>gripper::gripper_right_link</linkName>
+      <jointName>gripper::gripper_right_joint</jointName>
+      <initialAngle>90.0</initialAngle>
+      <turningDirection>1</turningDirection> 
+    </plugin>
+
+    <!-- Realsense Cameras -->
+    <model name="realsense_camera_front">
+      <plugin name="realsense_front_plugin" filename="libRealSensePlugin.so">
+        <pubTopic>realsense_front</pubTopic>
+      </plugin>
+      <include>
+        <uri>model://raptor_realsense_front</uri>
+        <pose> 0.07 0.0 0 -0.01  0.78539816339 0.0</pose>
+        <name>realsense_front</name>
+      </include>
+      <joint name='realsense_front_joint' type='fixed'>
+        <child>realsense_front::link</child>
+        <parent>raptor_frame::link</parent>
+      </joint>
+    </model>
+  
+    <model name="realsense_camera_down">
+      <plugin name="realsense_down_plugin" filename="libRealSensePlugin.so">
+        <pubTopic>realsense_down</pubTopic>
+      </plugin>
+      <include>
+        <uri>model://raptor_realsense_down</uri>
+        <pose> 0.0 0.0 -0.08 0.0 1.57079632679 0.0</pose>
+        <name>realsense_down</name>
+      </include>
+      <joint name='realsense_down_joint' type='fixed'>
+        <child>realsense_down::link</child>
+        <parent>raptor_frame::link</parent>
+      </joint>
+    </model>
+  </model>
+</sdf>

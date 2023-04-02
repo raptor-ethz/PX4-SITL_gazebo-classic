@@ -38,5 +38,34 @@
       <pose>-6 -3 0 0 0 0</pose>
     </include>
 
+    <model name='Floor'>
+      <static>true</static>
+      <pose> 0.7 1 0 0 0 0 </pose>
+      <link name='link'>
+      
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>13 8 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/WoodFloor</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>1 1 1</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+  </model>
+
   </world>
 </sdf>  

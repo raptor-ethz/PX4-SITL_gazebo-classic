@@ -2,18 +2,17 @@
 <sdf version='1.7'>
   <model name='Walls'>
     <static>true</static>
-    <link name='link_0'>
+    <link name='link'>
 
       <visual name='visual'>
         <geometry>
           <mesh>
-            <uri>model://leoc6_walls/meshes/137493_00-M-LEO_Walls.stl</uri>
-            <scale>0.001 0.001 0.001</scale>
+            <uri>model://leoc6_walls/meshes/LEOC6.dae</uri>
           </mesh>
         </geometry>
         <material>
           <script>
-            <name>Gazebo/PaintedWall</name>
+            <name>Gazebo/Bricks</name>
             <uri>file://media/materials/scripts/gazebo.material</uri>
           </script>
         </material>
@@ -22,13 +21,13 @@
       <collision name='collision'>
         <geometry>
           <mesh>
-            <uri>model://leoc6_walls/meshes/137493_00-M-LEO_Walls.stl</uri>
-            <scale>0.001 0.001 0.001</scale>
+            <uri>model://leoc6_walls/meshes/LEOC6.dae</uri>
           </mesh>
         </geometry>
       </collision>
-
     </link>
     
   </model>
+
+  
 </sdf>
